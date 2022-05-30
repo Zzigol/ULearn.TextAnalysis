@@ -26,21 +26,19 @@ namespace TextAnalysis
             string word = null;
             foreach (char c in sentence)
             {               
-                    if (Char.IsLetter(c) || c == '\'') builder.Append(c);
-                
+                    if (Char.IsLetter(c) || c == '\'') builder.Append(c);                
                     else
                     {
                         word = builder.ToString().ToLower();
                         if (word.Length > 0)
-                        words.Add(word);
+                            words.Add(word);
                         builder.Clear();
                     }
-                }
-                word = builder.ToString().ToLower();
+            }
+            word = builder.ToString().ToLower();
             if (word.Length > 0)
                 words.Add(word);
-             return words;
-             }
-
+            return words;
+        }
     }
 }

@@ -16,40 +16,39 @@ namespace TextAnalysis
             string minKey = null;
             int max = 0;
             var AllNGrams = new Dictionary<string, string>();
-            foreach (var key in KeysNgramm)
+            foreach (var pairAll in KeysNgramm)
             {
-                foreach (var val in key.Value)
+                foreach (var pairStrInt in pairAll.Value)
                 {
-                    for (int i = 0; i < key.Value.Count; i++)
+                    for (int i = 0; i < pairAll.Value.Count; i++)
                     {
-                        if (max < val.Value)
-                            max = val.Value;
+                        if (max < pairStrInt.Value)
+                            max = pairStrInt.Value;
                     }
                     
-                     if (key.Value.Count == 1)
-                            AllNGrams.Add(key.Key, val.Key);
+                        if (pairAll.Value.Count == 1)
+                            AllNGrams.Add(pairAll.Key, pairStrInt.Key);
                         else
                         {
-                            if (val.Value != max)
-                            {
-                                //AllNGrams.Add(key.Key,  )
-                            }
-                            else
-                            {
-                                foreach (var dic in KeysNgramm.Values)
-                                {
-                                    foreach (var key1 in dic.Keys)
-                                    {
 
-                                        if (string.CompareOrdinal(key1, minKey) > 0)
-                                        {
-                                            minKey = key1;
-                                        }
-                                    }
-                                }
-                                AllNGrams.Add(key.Key, minKey);
+                        foreach (var pairDic in pairAll.Value)
+                        {
+                            if (pairDic.Value != max) continue;
+                            else if (pairDic.Value == max)
+                            {
+                                if (!AllNGrams.ContainsKey(pairAll.Key))
+                                    AllNGrams.Add(pairAll.Key, pairStrInt.Key);
+
+                                else
+                                    //string c =GetVapairDic.Key;
+                                    AllNGrams[pairAll.Key]= pairDic.Key;
                             }
-                            continue;
+
+
+
+                        }
+
+
                         }
 
                     
@@ -94,20 +93,44 @@ namespace TextAnalysis
         }
     }
 }
-    
 
-   /* else if (key.Value.Count == 2)
-                        {
-                            foreach (var dic in KeysNgramm.Values)
+
+/* else if (key.Value.Count == 2)
+                     {
+                         foreach (var dic in KeysNgramm.Values)
+                         {
+                             foreach (var key1 in dic.Keys)
+                             {
+
+                                 if (string.CompareOrdinal(minKey, key1) < 0)
+                                 {
+                                     minKey = key1;
+                                 }
+                             }
+                         }
+                         AllNGrams.Add(key.Key, minKey);
+                     }*/
+
+/*
+                            if (pairStrInt.Value != max)
                             {
-                                foreach (var key1 in dic.Keys)
-                                {
-
-                                    if (string.CompareOrdinal(minKey, key1) < 0)
-                                    {
-                                        minKey = key1;
-                                    }
-                                }
+                            continue;
                             }
-                            AllNGrams.Add(key.Key, minKey);
-                        }*/
+                            else
+                            {
+                                foreach (var dicInner in KeysNgramm.Values)
+                                {
+                              
+                                foreach (var keyStr in dicInner.Keys)
+                                {
+                                    
+                                    if (string.CompareOrdinal(keyStr, minKey) < 0)
+                                        {
+                                            minKey = keyStr;
+                                        }
+                                    
+                                }
+                                }
+                                AllNGrams.Add(pairAll.Key, minKey);
+                            }
+                            continue;*/

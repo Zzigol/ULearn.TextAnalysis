@@ -7,7 +7,7 @@ namespace TextAnalysis
 {
     [TestFixture]
     public class FrequencyAnalysis_Tests
-    {/*
+    {
        [Test]
         [Order(00)]
         public void ReturnEmptyDictionary_OnEmptyText()
@@ -79,7 +79,7 @@ namespace TextAnalysis
             var actual = FrequencyAnalysisTask.GetMostFrequentNextWords(parsedText);
 
             AssertResult(expected, actual, text);
-        }*/
+        }
 
         [Test]
         [Order(05)]

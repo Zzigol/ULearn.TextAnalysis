@@ -58,18 +58,25 @@ namespace TextAnalysis
         
        public static Dictionary<string, string> GetSortLex(Dictionary<string, List<string>> AllNGrams)
        {
-            string minKey = null;
+            //string minKey = null;
            var LexGrams = new Dictionary<string, string>();
             foreach (var pair in AllNGrams)
+            {
+                string minKey = null;
                 for (var i = 0; i < pair.Value.Count; i++)
                 {
                     if (string.CompareOrdinal(pair.Value[i], minKey) < 0)
                     {
                         minKey = pair.Value[i];
                     }
-                    LexGrams.Add(pair.Key, minKey);
+                    if (minKey==null)
+                    minKey = pair.Value[i];
+                    
                 }
-           return LexGrams;
+                LexGrams.Add(pair.Key, minKey);
+            }
+                
+            return LexGrams;
     }
 
     public static Dictionary<string, Dictionary<string, int>> GetAllNGrams(List<List<string>> text)

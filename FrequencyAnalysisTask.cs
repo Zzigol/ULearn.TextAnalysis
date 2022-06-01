@@ -8,14 +8,13 @@ namespace TextAnalysis
         {
             var result = new Dictionary<string, string>();
             //GetSort(GetAllNGrams(text));
-            return result = GetSort(GetAllNGrams(text));
+            return result = GetSortLex(GetSort(GetAllNGrams(text)));
         }
 
-        public static Dictionary<string, string> GetSort(Dictionary<string, Dictionary<string, int>> KeysNgramm)
+        public static Dictionary<string, List<string>> GetSort(Dictionary<string, Dictionary<string, int>> KeysNgramm)
         {
-            string minKey = null;
             int max = 0;
-            var AllNGrams = new Dictionary<string, string>();
+            var AllNGrams = new Dictionary<string, List<string>>();
             foreach (var pairAll in KeysNgramm)
             {
                 foreach (var pairStrInt in pairAll.Value)
@@ -27,7 +26,11 @@ namespace TextAnalysis
                     }
                     
                         if (pairAll.Value.Count == 1)
-                            AllNGrams.Add(pairAll.Key, pairStrInt.Key);
+                    {
+                        AllNGrams.Add(pairAll.Key, new List<string>());
+                        AllNGrams[pairAll.Key].Add(pairStrInt.Key);
+                    }
+                           
                         else
                         {
 
@@ -37,29 +40,39 @@ namespace TextAnalysis
                             else if (pairDic.Value == max)
                             {
                                 if (!AllNGrams.ContainsKey(pairAll.Key))
-                                    AllNGrams.Add(pairAll.Key, pairStrInt.Key);
-
+                                {
+                                    AllNGrams.Add(pairAll.Key, new List<string>());
+                                    AllNGrams[pairAll.Key].Add(pairDic.Key);
+                                }
                                 else
-                                    //string c =GetVapairDic.Key;
-                                    AllNGrams[pairAll.Key]= pairDic.Key;
+
+                                    AllNGrams[pairAll.Key].Add(pairDic.Key);
+
                             }
-
-
-
                         }
-
-
                         }
-
-                    
                 }
-         
             }
-
             return AllNGrams;
-        } 
+        }
+        
+       public static Dictionary<string, string> GetSortLex(Dictionary<string, List<string>> AllNGrams)
+       {
+            string minKey = null;
+           var LexGrams = new Dictionary<string, string>();
+            foreach (var pair in AllNGrams)
+                for (var i = 0; i < pair.Value.Count; i++)
+                {
+                    if (string.CompareOrdinal(pair.Value[i], minKey) < 0)
+                    {
+                        minKey = pair.Value[i];
+                    }
+                    LexGrams.Add(pair.Key, minKey);
+                }
+           return LexGrams;
+    }
 
-        public static Dictionary<string, Dictionary<string, int>> GetAllNGrams(List<List<string>> text)
+    public static Dictionary<string, Dictionary<string, int>> GetAllNGrams(List<List<string>> text)
         {
             var KeysNgramm = new Dictionary<string, Dictionary<string, int>>();
             foreach (var sentence in text)

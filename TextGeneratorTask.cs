@@ -5,58 +5,43 @@ namespace TextAnalysis
 {
     static class TextGeneratorTask
     {
-       /* public static string TreeGrams(string ending, KeyValuePair<string,string> pair, int wordsCount)
-            
-        {
-            for (int i = 0; i < wordsCount; i++)
-            { 
-
-            }
-
-        }*/
-
             public static string ContinuePhrase(
             Dictionary<string, string> nextWords,
             string phraseBeginning,
             int wordsCount)
         {
             var builder = new StringBuilder();
-            string ending = null;
+            
             builder.Append(phraseBeginning);
-                foreach (var pair in nextWords)
-                {   
-                    for (int i = 0; i < wordsCount; i++) 
+            int i = wordsCount;
+            foreach (var pair in nextWords)
+            {
+                string[] array = phraseBeginning.Split(' ');
+                
+                    if (array.Length >= 2 && array[array.Length - 2] + " " + array[array.Length - 1] == pair.Key)
                     {
-
-                        string[] array = phraseBeginning.Split(' ');
-                        if (array.Length >= 2)
-                        {
-                            ending = array[array.Length - 2] + " " + array[array.Length - 1];
-                        }
-                    if (ending == pair.Key)
-                        {
-                            builder.Append(" ");
-                            builder.Append(pair.Value);
-                            phraseBeginning = builder.ToString();
-                        }
+                        builder.Append(" ");
+                        builder.Append(pair.Value);
+                        phraseBeginning = builder.ToString();
+                        array = phraseBeginning.Split(' ');
+                        i--;
+                        if (i <= 0) break;
                     }
-                    for (int i = 0; i < wordsCount; i++)
+                 
+                    else if (array[array.Length - 1] == pair.Key)
                     {
-                        string[] array = phraseBeginning.Split(' ');
-                        if (array[array.Length - 1] == pair.Key)
-                        {
-                            builder.Append(" ");
-                            builder.Append(pair.Value);
-                            phraseBeginning = builder.ToString();
-                        }
-
-                } 
+                        builder.Append(" ");
+                        builder.Append(pair.Value);
+                        phraseBeginning = builder.ToString();
+                        i--;
+                        if (i <= 0) break;
                 }
-               
+                 
+            }   
             string result = builder.ToString();
             return result;
-        }    
-    }
+            }    
+     }
 }
 
             

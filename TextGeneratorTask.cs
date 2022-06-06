@@ -20,7 +20,6 @@ namespace TextAnalysis
                 {
                     builder.Append(" " + nextWords[array[array.Length - 2] + " " + array[array.Length - 1]]);
                     phraseBeginning = builder.ToString();
-                   // array = phraseBeginning.Split(' ');
                     i--;
                     goto Found;
                 }
@@ -31,11 +30,6 @@ namespace TextAnalysis
                     i--;
                     goto Found;
                 }
-                else if (i > 0)
-                {
-                    i--;
-                    goto Found;
-                } 
                 return builder.ToString(); ;
             }    
     }
